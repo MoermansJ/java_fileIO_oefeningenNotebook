@@ -7,7 +7,8 @@ import java.util.stream.Stream;
 public class MainApp {
     public static void main(String[] args) {
 //        oefening1();
-        oefening2();
+//        oefening2();
+        oefening3();
     }
 
     private static void oefening1() {
@@ -70,11 +71,36 @@ public class MainApp {
 
             //Druk de gegevens van de eigenaar van het bestand af. (Zoek zelf naar een manier om dit te doen)
             System.out.printf("| File owner: %s", Files.getOwner(path));
-
         } catch (IOException e) {
             System.out.println("An exception occurred!\n" + e.getMessage());
             e.printStackTrace();
         }
+    }
 
+    private static void oefening3() {
+        //Maak een programma dat een stukje tekst wegschrijft naar een bestand.
+        String stukjeTekst = "And in the end, the love you take is equal to the love you make.";
+        Path path = Paths.get("resources/oefening3");
+
+        try {
+            //creating directories
+            if (!path.toFile().exists())
+                Files.createDirectories(path);
+
+            //Gebruik hierbij de try-with-resources om het correct af te sluiten.
+            path = path.resolve("lyrics.txt");
+            try (FileWriter fileWriter = new FileWriter(path.toFile())) {
+                fileWriter.write(stukjeTekst);
+            }
+
+            //Schrijf daarna een programma dat het bestand kan lezen.
+            try (FileReader fileReader = new FileReader(path.toFile());
+                 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+                bufferedReader.lines().forEach(System.out::println);
+            }
+        } catch (IOException e) {
+            System.out.println("An exception occurred\n" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
