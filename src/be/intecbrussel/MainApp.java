@@ -28,11 +28,9 @@ public class MainApp {
 
             //printing details of file
             System.out.printf("The file %s was last modified %s", path1.getFileName(), Files.getLastModifiedTime(path1));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             System.out.println("uh oh something went wrong :(\n" + e.getMessage());
             e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
         }
 
 
